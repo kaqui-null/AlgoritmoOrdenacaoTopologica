@@ -5,8 +5,3 @@
 4. Retornos:
     - Se existir ciclo -> ciclo
     - Se nao -> ordenacao topologica
-
-
-
-
-

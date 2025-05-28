@@ -21,11 +21,23 @@ class Graph:
         self.vertices[origin].new_neighbor(self.vertices[destiny])
 
 class TopologicalSort:
-    def sort() -> list:
-        pass
+    def sort(self, vertices) -> list:
+        visited = set()
+        stack = []
 
-    def dfs() -> Vertice:
-        pass
+        for vertice in vertices.values():
+            if vertice not in visited:
+                stack.insert(0, self.dfs(vertice, visited, stack))
+        
+        return stack
+
+    def dfs(self, vertice, visited, stack) -> int:
+        visited.add(vertice)
+        for neighbor in Vertice.neighbors:
+            if neighbor not in visited:
+                self.dfs(neighbor, visited, stack)
+
+        return Vertice.id
 
 class Main:
     def main():
