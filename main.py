@@ -31,17 +31,17 @@ class TopologicalSort:
 
         for vertice in vertices.values():
             if vertice not in visited:
-                stack.insert(0, self.dfs(vertice, visited, stack))
+                self.dfs(vertice, visited, stack)
         
-        return stack
+        return [v.id for v in stack]
 
     def dfs(self, vertice, visited, stack) -> int:
         visited.add(vertice)
         for neighbor in vertice.neighbors:
             if neighbor not in visited:
                 self.dfs(neighbor, visited, stack)
-
-        return vertice.id
+        
+        stack.insert(0, vertice)
 
 def main():
     exemplo_grafo1()
