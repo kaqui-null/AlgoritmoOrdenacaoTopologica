@@ -43,5 +43,20 @@ class Main:
     def main():
         pass
 
+    def exemplo_grafo1():
+        g = Graph()
+        g.new_edge(7, 11)
+        g.new_edge(7, 8)
+        g.new_edge(5, 11)
+        g.new_edge(3, 8)
+        g.new_edge(3, 10)
+        g.new_edge(11, 2)
+        g.new_edge(11, 9)
+        g.new_edge(11, 10)
+        g.new_edge(8, 9)
+
+        print(g.vertices)
+        print(TopologicalSort.sort(g.vertices))
+
 if __name__=="__main__":
     Main.main()
