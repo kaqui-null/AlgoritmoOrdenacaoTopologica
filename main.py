@@ -24,8 +24,8 @@ class Graph:
     def is_cyclic(self) -> bool: # algoritmo de Khan
 
         in_degree = {}
-        for v in in_degree:
-            in_degree[v] = 0
+        for v in self.vertices.values():
+            in_degree[v.id] = 0
 
         for v in self.vertices.values():
             for neighbor in v.neighbors:
@@ -53,7 +53,7 @@ class TopologicalSort:
         pass
 
     def sort(self, graph) -> list:
-        if graph.is_cyclic:
+        if graph.is_cyclic():
             return []
         visited = set()
         stack = []
@@ -74,7 +74,7 @@ class TopologicalSort:
         stack.insert(0, vertice)
 
 def main():
-    exemplo_ciclo()
+    exemplo_grafo1()
 
 def exemplo_grafo1():
     g = Graph()
@@ -97,7 +97,7 @@ def exemplo_ciclo():
     g = Graph()
     g.new_edge(1, 2)
     g.new_edge(2, 3)
-    g.new_edge(3, 4)
+    g.new_edge(3, 1)
     tSort = TopologicalSort()
 
     print(g.vertices)
