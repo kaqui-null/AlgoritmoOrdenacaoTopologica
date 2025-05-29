@@ -1,5 +1,6 @@
 from collections import deque
-
+import matplotlib.pyplot as plt
+import networkx as nx
 class Vertice:
     def __init__(self, id):
         self.id = id
@@ -73,35 +74,141 @@ class TopologicalSort:
         
         stack.insert(0, vertice)
 
+class Plotting:
+    def plot_graph(self, edges, label, highlight_cycle=False):
+        G = nx.DiGraph()
+        G.add_edges_from(edges)
+
+        pos = nx.spring_layout(G, seed=42)
+
+        plt.figure(figsize=(6, 4))
+
+        nx.draw(
+            G, pos,
+            with_labels=True,
+            node_color='skyblue',
+            node_size=1200,
+            edge_color='gray',
+            arrowsize=20,
+            font_weight='bold'
+        )
+
+        if highlight_cycle:
+            try:
+                cycle = nx.find_cycle(G, orientation='original')
+                cycle_edges = [(u, v) for u, v, _ in cycle]
+                nx.draw_networkx_edges(G, pos, edgelist=cycle_edges, edge_color='red', width=3)
+            except nx.NetworkXNoCycle:
+                print("Não foi encontrado ciclo, mesmo com highlight_cycle=True")
+
+        plt.text(
+            0.5, 1.05, label,
+            horizontalalignment='center',
+            verticalalignment='center',
+            fontsize=14,
+            fontweight='bold',
+            transform=plt.gca().transAxes
+        )
+
+        plt.axis('off')
+        plt.subplots_adjust(top=0.85)
+        plt.show()
+
+
+    def exemplo1(self):
+        edges = [(1, 2), (2, 3), (3, 4)]
+
+        g = Graph()
+        for edge in edges:
+            g.new_edge(edge[0], edge[1])
+
+        tSort = TopologicalSort()
+        print(tSort.sort(g))
+
+        self.plot_graph(edges, "Exemplo 1 – Grafo em linha")
+
+
+    def exemplo2(self):
+        edges = [(1, 3), (2, 3), (3, 4)]
+        g = Graph()
+        for edge in edges:
+            g.new_edge(edge[0], edge[1])
+
+        tSort = TopologicalSort()
+        print(tSort.sort(g))
+
+        self.plot_graph(edges, "Exemplo 2 – Múltiplas raízes")
+
+
+    def exemplo3(self):
+        edges = [(1, 2), (1, 3), (2, 4), (3, 4)]
+        g = Graph()
+        for edge in edges:
+            g.new_edge(edge[0], edge[1])
+
+        tSort = TopologicalSort()
+        print(tSort.sort(g))
+
+        self.plot_graph(edges, "Exemplo 3 – Ramificações")
+
+
+    def exemplo4(self):
+        edges = [(5, 0), (5, 2), (4, 0), (4, 1), (2, 3), (3, 1)]
+        g = Graph()
+        for edge in edges:
+            g.new_edge(edge[0], edge[1])
+
+        tSort = TopologicalSort()
+        print(tSort.sort(g))
+
+        self.plot_graph(edges, "Exemplo 4 – DAG com profundidade")
+
+
+    def exemplo5(self):
+        edges = [(1, 2), (2, 3), (4, 5)]
+        g = Graph()
+        for edge in edges:
+            g.new_edge(edge[0], edge[1])
+
+        tSort = TopologicalSort()
+        print(tSort.sort(g))
+
+        self.plot_graph(edges, "Exemplo 5 – Grafo desconexo")
+
+
+    def exemplo6(self):
+        edges = [(1, 5), (2, 5), (3, 5), (4, 5)]
+        g = Graph()
+        for edge in edges:
+            g.new_edge(edge[0], edge[1])
+
+        tSort = TopologicalSort()
+        print(tSort.sort(g))
+
+        self.plot_graph(edges, "Exemplo 6 – Vários indo para 1 destino")
+
+
+    def exemplo7(self):
+        edges = [(1, 2), (2, 3), (3, 1)]
+        g = Graph()
+        for edge in edges:
+            g.new_edge(edge[0], edge[1])
+
+        tSort = TopologicalSort()
+        print(tSort.sort(g))
+
+        self.plot_graph(edges, "Exemplo 7 – Grafo com ciclo", highlight_cycle=True)
+
+
 def main():
-    exemplo_grafo1()
-
-def exemplo_grafo1():
-    g = Graph()
-    g.new_edge(7, 11)
-    g.new_edge(7, 8)
-    g.new_edge(5, 11)
-    g.new_edge(3, 8)
-    g.new_edge(3, 10)
-    g.new_edge(11, 2)
-    g.new_edge(11, 9)
-    g.new_edge(11, 10)
-    g.new_edge(8, 9)
-
-    tSort = TopologicalSort()
-
-    print(g.vertices)
-    print(tSort.sort(graph=g))
-
-def exemplo_ciclo():
-    g = Graph()
-    g.new_edge(1, 2)
-    g.new_edge(2, 3)
-    g.new_edge(3, 1)
-    tSort = TopologicalSort()
-
-    print(g.vertices)
-    print(tSort.sort(graph=g))
+    plt = Plotting()
+    plt.exemplo1()
+    plt.exemplo2()
+    plt.exemplo3()
+    plt.exemplo4()
+    plt.exemplo5()
+    plt.exemplo6()
+    plt.exemplo7()
 
 
 if __name__=="__main__":
